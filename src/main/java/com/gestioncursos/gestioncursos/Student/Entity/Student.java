@@ -1,7 +1,5 @@
 package com.gestioncursos.gestioncursos.Student.Entity;
 
-
-
 import java.util.List;
 
 import com.gestioncursos.gestioncursos.Course.Entity.Course;
