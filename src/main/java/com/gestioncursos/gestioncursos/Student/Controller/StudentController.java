@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gestioncursos.gestioncursos.Student.Dto.AddCourseToStudentDto;
 import com.gestioncursos.gestioncursos.Student.Dto.StudentDto;
 import com.gestioncursos.gestioncursos.Student.Entity.Student;
 import com.gestioncursos.gestioncursos.Student.Service.StudentService;
@@ -91,5 +92,11 @@ public class StudentController {
             
         }
 
+    }
+
+    @PostMapping("/addCourseToStudent")
+    public ResponseEntity<String> addCourseToStudent(@RequestBody AddCourseToStudentDto dto) {
+        studentService.addCourseToStudent(dto.getStudentId(), dto.getCourseId());
+        return ResponseEntity.ok("Course added to student successfully.");
     }
 }

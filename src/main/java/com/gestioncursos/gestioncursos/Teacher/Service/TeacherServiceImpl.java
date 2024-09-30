@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.gestioncursos.gestioncursos.Exceptions.DuplicateResourceException;
+import com.gestioncursos.gestioncursos.Exceptions.InvalidInputException;
 import com.gestioncursos.gestioncursos.Teacher.Entity.Teacher;
 import com.gestioncursos.gestioncursos.Teacher.Repository.TeacherRepository;
 
@@ -20,6 +22,21 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Override
     public Teacher createTeacher(Teacher teacher) {
+
+        if (teacher.getAge() <= 0 || teacher.getAge() > 150) {
+
+            throw new InvalidInputException("Invalid Age: " + teacher.getAge());
+
+        }
+
+
+        Optional<Teacher> existingTeacherEmail = teacherRepository.findTeacherByEmail(teacher.getEmail());
+
+        if (existingTeacherEmail.isPresent()) {
+            
+            throw new DuplicateResourceException("The email " + teacher.getEmail() + " already exists!");
+            
+        }
 
         return teacherRepository.save(teacher);
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gestioncursos.gestioncursos.Course.Entity.Course;
 import com.gestioncursos.gestioncursos.Course.Repository.CourseRepository;
+import com.gestioncursos.gestioncursos.Exceptions.DuplicateResourceException;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -20,6 +21,12 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public Course createCourse(Course course){
+
+        Optional<Course> courseExistName = courseRepository.findByCourseName(course.getCourseName());
+
+        if (courseExistName.isPresent()) {
+            throw new DuplicateResourceException("Course with name " + course.getCourseName() + " Already Exists!");
+        }
 
         return courseRepository.save(course);
 

@@ -5,6 +5,7 @@ public class CourseDto {
 
     private Long id;
     private String courseName;
+    private Long teacherId;
 
     public Long getId() {
         return id;
@@ -17,6 +18,14 @@ public class CourseDto {
     }
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public Long getTeacherId() {
+        return teacherId;
+    }
+    
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
 }

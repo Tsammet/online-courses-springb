@@ -17,4 +17,6 @@ public interface StudentService {
 
     Page<Student> findAllStudents(Pageable pageable);
 
+    Student addCourseToStudent(Long studentId, Long courseId);
+
 }

@@ -1,5 +1,6 @@
 package com.gestioncursos.gestioncursos.Student.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gestioncursos.gestioncursos.Course.Entity.Course;
@@ -39,7 +40,7 @@ public class Student {
         // Luego se hace el inverse que es contra la clase que haré la relación, course_id como se llamará el atributo y la referencia "id " a la tabla Course
         inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id")
     )
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     // EL CONSTRUCTOR VACIO FACILITA LA CREACIÓN DE INSTANCIAS
     public Student() {
@@ -83,6 +84,14 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
     
 }

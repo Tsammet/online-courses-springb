@@ -1,5 +1,7 @@
 package com.gestioncursos.gestioncursos.Course.Controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gestioncursos.gestioncursos.Course.Dto.CourseDto;
 import com.gestioncursos.gestioncursos.Course.Entity.Course;
 import com.gestioncursos.gestioncursos.Course.Service.CourseService;
+import com.gestioncursos.gestioncursos.Exceptions.ResourceNotFoundException;
+import com.gestioncursos.gestioncursos.Teacher.Entity.Teacher;
+import com.gestioncursos.gestioncursos.Teacher.Repository.TeacherRepository;
 
 import jakarta.validation.Valid;
 
@@ -26,12 +31,24 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private TeacherRepository teacherRepository;
+
     @PostMapping("/create")
     public ResponseEntity<String> createCourse(@Valid @RequestBody CourseDto courseDto){
+
+        Optional<Teacher> existTeacher = teacherRepository.findById(courseDto.getTeacherId());
+
+        if (!existTeacher.isPresent()) {
+
+            throw new ResourceNotFoundException("Teacher not found!");
+            
+        }
 
         Course course = new Course();
 
         course.setCourseName(courseDto.getCourseName());
+        course.setTeachers(existTeacher.get());
 
         Course newCourse = courseService.createCourse(course);
 
